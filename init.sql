@@ -6,3 +6,11 @@ CREATE TABLE IF NOT EXISTS movies (
     year INTEGER NOT NULL,
     created_at DATE NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users (
+	created_at DATE NOT NULL,
+	password_hash VARCHAR NOT NULL,
+	preference_key INTEGER NOT NULL,
+	user_id serial PRIMARY KEY,
+	username VARCHAR NOT NULL
+)
