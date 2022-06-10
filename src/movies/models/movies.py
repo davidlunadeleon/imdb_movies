@@ -1,4 +1,4 @@
-from movies.services.db import Base
+from movies.models import Base
 from sqlalchemy import (
     Column,
     Integer,

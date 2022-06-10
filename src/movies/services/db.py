@@ -1,5 +1,5 @@
-from sqlalchemy import MetaData, create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from movies.models import Base
+from sqlalchemy import create_engine
 import os
 
 
@@ -9,11 +9,6 @@ def get_postgres_uri():
     password = os.environ.get("DB_PASS", "abc123")
     user, db_name = "movies", "movies"
     return f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
-
-
-Base = declarative_base(
-    metadata=MetaData(),
-)
 
 
 engine = create_engine(
