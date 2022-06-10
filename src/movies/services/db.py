@@ -23,6 +23,6 @@ engine = create_engine(
 
 
 def start_mappers():
-    import movies.models.movies
+    from movies.models import movies, users
 
     Base.metadata.create_all(engine)
