@@ -1,3 +1,4 @@
+from movies.services.db import Base
 from sqlalchemy import (
     Column,
     Integer,
@@ -5,8 +6,6 @@ from sqlalchemy import (
     Float,
     TIMESTAMP,
 )
-
-from ..service_layer.db import Base
 
 
 class Movie(Base):
