@@ -1,6 +1,18 @@
-from movies.models import Base
-from sqlalchemy import create_engine
+from sqlalchemy import (
+    Column,
+    Float,
+    Integer,
+    MetaData,
+    String,
+    TIMESTAMP,
+    Table,
+    create_engine,
+)
+from sqlalchemy.orm import mapper
 import os
+
+from movies.models.movies import Movie
+from movies.models.users import User
 
 
 def get_postgres_uri():
@@ -16,8 +28,31 @@ engine = create_engine(
     isolation_level="REPEATABLE READ",
 )
 
+metadata = MetaData()
+
+movies = Table(
+    "movies",
+    metadata,
+    Column("movie_id", Integer, primary_key=True),
+    Column("create_time", TIMESTAMP(timezone=True), index=True),
+    Column("movie_title", String),
+    Column("preference_key", Integer),
+    Column("rating", Float),
+    Column("year", Integer),
+)
+
+users = Table(
+    "users",
+    metadata,
+    Column("user_id", Integer, primary_key=True),
+    Column("create_time", TIMESTAMP(timezone=True), index=True),
+    Column("password_hash", String),
+    Column("preference_key", Integer),
+    Column("username", String),
+)
+
 
 def start_mappers():
-    from movies.models import movies, users
-
-    Base.metadata.create_all(engine)
+    movies_mapper = mapper(Movie, movies)
+    users_mapper = mapper(User, users)
+    metadata.create_all(engine)
