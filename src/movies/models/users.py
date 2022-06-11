@@ -1,17 +1,23 @@
-from movies.models import Base
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    TIMESTAMP,
-)
+from datetime import datetime
 
 
-class User(Base):
-    __tablename__ = "users"
+class User:
+    create_time: datetime
+    password_hash: str
+    preference_key: int
+    user_id: int
+    username: str
 
-    create_time = Column(TIMESTAMP(timezone=True), index=True)
-    password_hash = Column(String)
-    preference_key = Column(Integer)
-    user_id = Column(Integer, primary_key=True)
-    username = Column(String)
+    def __init__(
+        self,
+        create_time: datetime,
+        password_hash: str,
+        preference_key: int,
+        user_id: int,
+        username: str,
+    ) -> None:
+        self.create_time = create_time
+        self.password_hash = password_hash
+        self.preference_key = preference_key
+        self.user_id = user_id
+        self.username = username

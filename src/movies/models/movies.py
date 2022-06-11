@@ -1,19 +1,26 @@
-from movies.models import Base
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Float,
-    TIMESTAMP,
-)
+from datetime import datetime
 
 
-class Movie(Base):
-    __tablename__ = "movies"
+class Movie:
+    create_time: datetime
+    movie_id: int
+    movie_title: str
+    preference_key: int
+    rating: float
+    year: int
 
-    movie_id = Column(Integer, primary_key=True)
-    preference_key = Column(Integer)
-    movie_title = Column(String)
-    rating = Column(Float)
-    year = Column(Integer)
-    create_time = Column(TIMESTAMP(timezone=True), index=True)
+    def __init__(
+        self,
+        create_time: datetime,
+        movie_id: int,
+        movie_title: str,
+        preference_key: int,
+        rating: float,
+        year: int,
+    ) -> None:
+        self.create_time = create_time
+        self.movie_id = movie_id
+        self.movie_title = movie_title
+        self.preference_key = preference_key
+        self.rating = rating
+        self.year = year
