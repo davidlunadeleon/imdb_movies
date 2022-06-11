@@ -12,7 +12,7 @@ def create_app():
 
     from movies.services import db
 
-    db.start_mappers()
+    session = db.start_mappers()
 
     from movies.routes import auth, movies
 

@@ -8,7 +8,7 @@ from sqlalchemy import (
     Table,
     create_engine,
 )
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import mapper, sessionmaker, Session
 import os
 
 from movies.models.movies import Movie
@@ -52,7 +52,8 @@ users = Table(
 )
 
 
-def start_mappers():
+def start_mappers() -> Session:
     movies_mapper = mapper(Movie, movies)
     users_mapper = mapper(User, users)
     metadata.create_all(engine)
+    return sessionmaker(bind=engine)()
