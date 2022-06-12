@@ -9,9 +9,17 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 user_repository: UserRepository
 user_repository = g.user_repository
 
-
 @bp.route("/signup", methods=["POST"])
 def signup():
+    """
+    Creates a new user its username, password and calculated preference_key.
+
+    :param username: user's username
+    :param password: user's password
+    :param preference1: first movie genre preference
+    :param preference2: second movie genre preference
+    :param preference3: third movie genre preference
+    """ 
     username = request.form["username"]
     password = request.form["password"]
     preference1 = request.form["preference1"]
@@ -28,9 +36,14 @@ def signup():
     user_repository.add(User(username, preference_key, password))
     return Response(response="ok", status=200)
 
-
 @bp.route("/login", methods=["POST"])
 def login():
+    """
+    Logins a new with its username and password
+
+    :param username: user's username
+    :param password: user's password
+    """ 
     username = request.form["username"]
     password = request.form["password"]
 
