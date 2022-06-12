@@ -7,6 +7,7 @@ import csv
 
 T = TypeVar("T", User, Movie)
 
+# Repository Pattern
 
 class AbstractRepository(ABC, Generic[T]):
     session: Session

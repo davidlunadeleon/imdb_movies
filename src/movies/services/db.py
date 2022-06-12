@@ -18,6 +18,7 @@ from movies.models.users import User
 
 
 def get_postgres_uri():
+    # Progress setup
     host = os.environ.get("DB_HOST", "postgres")
     port = 5432
     password = os.environ.get("DB_PASS", "abc123")
@@ -32,6 +33,7 @@ engine = create_engine(
 
 metadata = MetaData()
 
+# Movies' table
 movies = Table(
     "movies",
     metadata,
@@ -43,6 +45,7 @@ movies = Table(
     Column("year", Integer),
 )
 
+# Users' table
 users = Table(
     "users",
     metadata,
