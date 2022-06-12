@@ -33,7 +33,7 @@ metadata = MetaData()
 movies = Table(
     "movies",
     metadata,
-    Column("movie_id", Integer, primary_key=True),
+    Column("movie_id", Integer, primary_key=True, autoincrement=True),
     Column("create_time", TIMESTAMP(timezone=True), index=True),
     Column("movie_title", String),
     Column("preference_key", Integer),
@@ -44,7 +44,7 @@ movies = Table(
 users = Table(
     "users",
     metadata,
-    Column("user_id", Integer, primary_key=True),
+    Column("user_id", Integer, primary_key=True, autoincrement=True),
     Column("create_time", TIMESTAMP(timezone=True), index=True),
     Column("password_hash", String),
     Column("preference_key", Integer),
