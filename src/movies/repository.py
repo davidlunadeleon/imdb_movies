@@ -15,9 +15,12 @@ class AbstractRepository(ABC, Generic[T]):
 
     def add(self, entity: T):
         self.session.add(entity)
+        self.session.commit()
 
     def update(self, entity: T) -> T:
-        return self.session.merge(entity)
+        entity = self.session.merge(entity)
+        self.session.commit()
+        return entity
 
     @abstractmethod
     def delete(self, id: int):
@@ -34,7 +37,8 @@ class AbstractRepository(ABC, Generic[T]):
 
 class UserRepository(AbstractRepository[User]):
     def delete(self, id: int):
-        return self.session.query(User).filter_by(user_id=id).delete()
+        self.session.query(User).filter_by(user_id=id).delete()
+        self.session.commit()
 
     def list(self):
         return self.session.query(User).all()
@@ -45,7 +49,8 @@ class UserRepository(AbstractRepository[User]):
 
 class MovieRepository(AbstractRepository[Movie]):
     def delete(self, id: int):
-        return self.session.query(Movie).filter_by(movie_id=id).delete()
+        self.session.query(Movie).filter_by(movie_id=id).delete()
+        self.session.commit()
 
     def list(self):
         return self.session.query(Movie).all()
