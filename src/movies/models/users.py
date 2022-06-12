@@ -4,8 +4,11 @@ from datetime import datetime
 
 @dataclass(unsafe_hash=True)
 class User:
-    create_time: datetime
     password_hash: str
     preference_key: int
-    user_id: int
     username: str
+    create_time: datetime | None = None
+    user_id: int | None = None
+
+    def __post_init__(self):
+        self.create_time = datetime.now()
