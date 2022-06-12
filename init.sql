@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS users (
 	password_hash VARCHAR NOT NULL,
 	preference_key INTEGER NOT NULL,
 	user_id serial PRIMARY KEY,
-	username VARCHAR NOT NULL
+	username VARCHAR NOT NULL UNIQUE
 )

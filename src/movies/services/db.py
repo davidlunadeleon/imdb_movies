@@ -6,6 +6,7 @@ from sqlalchemy import (
     String,
     TIMESTAMP,
     Table,
+    UniqueConstraint,
     create_engine,
 )
 from sqlalchemy.orm import mapper, sessionmaker, Session
@@ -49,6 +50,7 @@ users = Table(
     Column("password_hash", String),
     Column("preference_key", Integer),
     Column("username", String),
+    UniqueConstraint("username"),
 )
 
 
