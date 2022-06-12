@@ -1,4 +1,4 @@
-from flask import Blueprint, request, g
+from flask import Blueprint, request, g, session
 from flask.wrappers import Response
 from movies.models.users import User
 from movies.repository import UserRepository
@@ -27,3 +27,16 @@ def signup():
 
     user_repository.add(User(username, preference_key, password))
     return Response(response="ok", status=200)
+
+
+@bp.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    user = user_repository.get_by_username(username)
+    if user.check_credentials(username, password):
+        session["user_id"] = user.user_id
+        return Response(status=200)
+    else:
+        return Response(response="Wrong user credentials provided", status=401)

@@ -47,6 +47,9 @@ class UserRepository(AbstractRepository[User]):
     def get_by_id(self, id: int) -> User:
         return self.session.query(User).filter_by(user_id=id).one()
 
+    def get_by_username(self, username: str) -> User:
+        return self.session.query(User).filter_by(username=username).one()
+
 
 class MovieRepository(AbstractRepository[Movie]):
     def delete(self, id: int):
