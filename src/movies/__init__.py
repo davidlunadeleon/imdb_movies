@@ -24,9 +24,10 @@ def create_app():
 
         g.movie_repository.populate()
 
-        from movies.routes import auth, movies
+        from movies.routes import auth, movies, users
 
         app.register_blueprint(auth.bp)
         app.register_blueprint(movies.bp)
+        app.register_blueprint(users.bp)
 
     return app
