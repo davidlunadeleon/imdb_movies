@@ -8,6 +8,7 @@ user_repository = g.user_repository
 
 
 def require_login(func):
+    # Middleware specifying that login is required.
     @wraps(func)
     def check_user_id(*args, **kwargs):
         user_id = session.get("user_id")

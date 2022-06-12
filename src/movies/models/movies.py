@@ -4,6 +4,7 @@ from datetime import datetime
 
 @dataclass(unsafe_hash=True)
 class Movie:
+    """ This class is used to hold Movie objects information."""
     movie_title: str
     preference_key: int
     rating: float
