@@ -19,6 +19,8 @@ def create_app():
         g.movie_repository = MovieRepository(session)
         g.user_repository = UserRepository(session)
 
+        g.movie_repository.populate()
+
         from movies.routes import auth, movies
 
         app.register_blueprint(auth.bp)

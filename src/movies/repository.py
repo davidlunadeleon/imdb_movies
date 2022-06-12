@@ -3,6 +3,7 @@ from typing import Generic, TypeVar, TypeVar, TypeVar, TypeVar
 from sqlalchemy.orm import Session
 from movies.models.users import User
 from movies.models.movies import Movie
+import csv
 
 T = TypeVar("T", User, Movie)
 
@@ -57,3 +58,16 @@ class MovieRepository(AbstractRepository[Movie]):
 
     def get_by_id(self, id: int) -> Movie:
         return self.session.query(Movie).filter_by(movie_id=id).one()
+
+    def populate(self):
+        if len(self.list()) == 0:
+            with open("/src/movies/movie_results.csv") as f:
+                for row in csv.DictReader(f, skipinitialspace=True):
+                    self.add(
+                        Movie(
+                            row["movie_title"],
+                            int(row["preference_key"]),
+                            float(row["rating"]),
+                            int(row["year"]),
+                        )
+                    )
