@@ -14,6 +14,8 @@ def create_app():
 
     session = db.start_mappers()
 
+    app.session = session
+
     from movies.routes import auth, movies
 
     app.register_blueprint(auth.bp)
