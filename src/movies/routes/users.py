@@ -15,6 +15,13 @@ user_repository = g.user_repository
 @bp.route("/<int:user_id>", methods=["PUT"])
 @require_login
 def update_user_info(user_id: int):
+    """
+    Updates user's movie preferences
+
+    :param preference1: first movie genre preference
+    :param preference2: second movie genre preference
+    :param preference3: third movie genre preference
+    """
     preference1 = request.form["preference1"]
     preference2 = request.form["preference2"]
     preference3 = request.form["preference3"]
@@ -41,6 +48,11 @@ def update_user_info(user_id: int):
 @bp.route("/<int:user_id>/password", methods=["PUT"])
 @require_login
 def update_user_password(user_id: int):
+    """
+    Updates user's password
+
+    :param password: new password
+    """
     password = request.form["password"]
 
     user: User

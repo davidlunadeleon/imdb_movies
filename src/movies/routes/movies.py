@@ -15,6 +15,11 @@ movie_repository = g.movie_repository
 @bp.route("/recommendations", methods=["GET"])
 @require_login
 def recommendations():
+    """
+    Returns movie recommendations matching the user's preference key
+
+    :param num: amount of movies to return. If none is provided it will return 10 movie recommendations.
+    """ 
     num_rec = req.args.get("num")
     num_rec = 10 if num_rec is None else clamp(int(num_rec), 1, 1000)
 
