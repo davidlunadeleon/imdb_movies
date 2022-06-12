@@ -43,6 +43,5 @@ def signup():
         [get_genre(preference1), get_genre(preference2), get_genre(preference3)]
     )
 
-    user = User(password, preference_key, username)
-    user_repository.add(user)
+    user_repository.add(User(username, preference_key, password))
     return Response(response="ok", status=200)
