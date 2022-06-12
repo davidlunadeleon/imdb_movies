@@ -19,9 +19,18 @@ def recommendations():
     Returns movie recommendations matching the user's preference key
 
     :param num: amount of movies to return. If none is provided it will return 10 movie recommendations.
-    """ 
+    """
     num_rec = req.args.get("num")
     num_rec = 10 if num_rec is None else clamp(int(num_rec), 1, 1000)
+    match req.args.get("order"):
+        case None:
+            is_descending = False
+        case "asc":
+            is_descending = False
+        case "desc":
+            is_descending = True
+        case _:
+            raise Exception("Unkown order")
 
     user = g.user
     selected_movies = list(
@@ -29,5 +38,10 @@ def recommendations():
             lambda movie: movie.preference_key == user.preference_key,
             movie_repository.list(),
         )
-    )[:num_rec]
+    )
+    selected_movies = sorted(selected_movies, key=lambda movie: movie.rating)
+    if is_descending:
+        selected_movies.reverse()
+    selected_movies = selected_movies[:num_rec]
+
     return jsonify(selected_movies)
