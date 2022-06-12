@@ -15,6 +15,9 @@ def create_app():
 
     session = db.start_mappers()
 
+    # TODO: Move to env file
+    app.secret_key = "0a5a98bac7adcad722b3f29b3ff37a288277de1cf34d803106f3860fc548287c"
+
     with app.app_context():
         g.movie_repository = MovieRepository(session)
         g.user_repository = UserRepository(session)
