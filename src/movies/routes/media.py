@@ -3,7 +3,7 @@ from movies.repository import MovieRepository, UserRepository
 from movies.util.math import clamp
 from movies.middlewares.auth import require_login
 
-bp = Blueprint("movies", __name__, url_prefix="/movies")
+bp = Blueprint("media", __name__, url_prefix="/media")
 
 user_repository: UserRepository
 user_repository = g.user_repository
@@ -16,10 +16,18 @@ movie_repository = g.movie_repository
 @require_login
 def recommendations():
     """
-    Returns movie recommendations matching the user's preference key
+    Returns media recommendations matching the user's preference key
 
-    :param num: amount of movies to return. If none is provided it will return 10 movie recommendations.
+    :param num: amount of media to return. If none is provided it will return 10 media recommendations.
     """
+    match req.args.get("media_type"):
+        case None:
+            repository = movie_repository
+        case "movies":
+            repository = movie_repository
+        case _:
+            raise Exception("Unkown media type")
+
     num_rec = req.args.get("num")
     num_rec = 10 if num_rec is None else clamp(int(num_rec), 1, 1000)
     match req.args.get("order"):
@@ -33,15 +41,15 @@ def recommendations():
             raise Exception("Unkown order")
 
     user = g.user
-    selected_movies = list(
+    selected_media = list(
         filter(
-            lambda movie: movie.preference_key == user.preference_key,
-            movie_repository.list(),
+            lambda media: media.preference_key == user.preference_key,
+            repository.list(),
         )
     )
-    selected_movies = sorted(selected_movies, key=lambda movie: movie.rating)
+    selected_media = sorted(selected_media, key=lambda media: media.rating)
     if is_descending:
-        selected_movies.reverse()
-    selected_movies = selected_movies[:num_rec]
+        selected_media.reverse()
+    selected_media = selected_media[:num_rec]
 
-    return jsonify(selected_movies)
+    return jsonify(selected_media)
